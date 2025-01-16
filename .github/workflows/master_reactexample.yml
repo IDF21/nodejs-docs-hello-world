@@ -14,12 +14,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@main
 
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
           node-version: '18.x'
+      - name: Set env as secret
+        env:
+          MY_VAL: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DDCF0CA2287E487182BF8727141E110A }}
+        run: |
+          import os
+          for q in (os.getenv("MY_VAL")):
+            print(q)
+        shell: python
 
       - name: npm install, build, and test
         run: |
@@ -52,5 +60,5 @@ jobs:
         with:
           app-name: 'reactexample'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DDCF0CA2287E487182BF8727141E110A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DDCF0CA2287E47141E110A }}
           package: .
